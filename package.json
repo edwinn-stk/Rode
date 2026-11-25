@@ -1,0 +1,9 @@
+{
+  "name": "rodeo-harness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Synthetic used-car marketplace with a scripted AI listing writer, for agent red-team testing (no dependencies).",
+  "main": "rd-server.js",
+  "scripts": { "start": "node rd-server.js" },
+  "engines": { "node": ">=18" }
+}

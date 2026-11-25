@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rodeo · Buy & sell used cars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f6f5f2;--card:#fff;--ink:#1b1b1f;--mute:#676a73;--line:#e6e3dc;--char:#1f2126;--orange:#ef6a2b;--orange2:#fff1e9;--green:#13824b;--red:#b42318;--disp:"Plus Jakarta Sans",Inter,system-ui,sans-serif}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  button,input,select,textarea{font:inherit}
+  header{background:var(--char);color:#fff;position:sticky;top:0;z-index:30}
+  .top{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:24px}
+  .logo{font-family:var(--disp);font-weight:800;font-size:22px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+  .logo b{color:var(--orange)}
+  nav{display:flex;gap:2px}
+  nav button{border:0;background:none;color:#c9cad0;padding:9px 14px;border-radius:999px;cursor:pointer;font-size:14px}
+  nav button:hover{color:#fff}
+  nav button.on{background:#34363d;color:#fff;font-weight:600}
+  .acct{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px;color:#c9cad0}
+  .acct i{width:32px;height:32px;border-radius:50%;background:var(--orange);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:700;font-size:12px}
+  main{max-width:1120px;margin:0 auto;padding:24px 20px 120px}
+  h1{font-family:var(--disp);font-size:28px;letter-spacing:-.02em;margin:0 0 6px}
+  h2{font-family:var(--disp);font-size:18px;margin:0 0 12px}
+  .mute{color:var(--mute);font-size:13.5px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 16px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink)}
+  .btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+  .btn.dark{background:var(--char);border-color:var(--char);color:#fff}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .cars{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .car{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .car .ph{height:130px}
+  .car .b{padding:12px 14px}
+  .car b{display:block;font-size:14.5px}
+  .car .p{font-family:var(--disp);font-weight:800;font-size:18px;margin-top:4px}
+  .ph{background:linear-gradient(135deg,#d9d6cf,#bdb8ae);position:relative}
+  .ph:after{content:"";position:absolute;left:18%;right:18%;bottom:26%;height:28%;border-radius:40% 40% 12% 12%;background:rgba(255,255,255,.55)}
+  .ph.red{background:linear-gradient(135deg,#b3262e,#6f1016)}
+  .ph.blue{background:linear-gradient(135deg,#3f5c88,#1f2f4d)}
+  .ph.gray{background:linear-gradient(135deg,#8c9096,#4a4e55)}
+  .ph.white{background:linear-gradient(135deg,#f1efe9,#cfcac0)}
+  .grid2{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
+  @media (max-width:900px){.grid2{grid-template-columns:1fr}}
+  .kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+  .kv:first-of-type{border-top:0}
+  .notes{white-space:pre-wrap;background:#faf9f6;border:1px dashed #d8d3c8;border-radius:10px;padding:12px;font-size:14px;line-height:1.55}
+  .report{border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:10px}
+  .flag{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:14px}
+  .flag i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+  .flag i.w{background:#fde8e6;color:var(--red)}
+  .flag i.n{background:#eef0f3;color:var(--mute)}
+  label.f{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
+  input[type=text],input[type=number],select,textarea{width:100%;border:1px solid #d6d2c8;border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;color:var(--ink)}
+  textarea{min-height:230px;resize:vertical;line-height:1.55}
+  input:focus,select:focus,textarea:focus{outline:2px solid #f9c4a8;border-color:var(--orange)}
+  .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:640px){.row3,.row2{grid-template-columns:1fr}}
+  .photos{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .photos .ph{height:70px;border-radius:8px}
+  .aibar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(90deg,#fff3ec,#fffaf6);border:1px solid #f6d3bf;border-radius:12px;padding:12px 14px;margin-top:14px}
+  .aibar .ai{width:30px;height:30px;border-radius:8px;background:var(--orange);color:#fff;display:grid;place-items:center;font-weight:800}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:var(--orange2);color:#b8481a;margin-left:6px;vertical-align:middle}
+  .hint{font-size:12px;color:var(--mute);margin-top:6px}
+  .confirm{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px;background:#fcfbf8;font-size:14px;line-height:1.5;margin-top:16px}
+  .confirm input{margin-top:4px;width:18px;height:18px}
+  .live{background:#ecf8f1;border:1px solid #bfe6cf;color:#14532d;border-radius:12px;padding:16px;font-size:14px;line-height:1.5}
+  footer{max-width:1120px;margin:0 auto;padding:0 20px 40px;color:var(--mute);font-size:12px;display:flex;gap:18px;flex-wrap:wrap}
+  footer a{color:inherit;text-decoration:none}
+  .hidden,#asst.hidden,#asstBtn.hidden{display:none !important}
+  #asstBtn{position:fixed;right:22px;bottom:22px;display:flex;align-items:center;gap:10px;background:var(--char);color:#fff;border:0;border-radius:999px;padding:10px 18px 10px 10px;font-weight:600;font-size:14px;box-shadow:0 10px 28px rgba(0,0,0,.25);cursor:pointer;z-index:40}
+  #asstBtn span{width:28px;height:28px;border-radius:50%;background:var(--orange);display:grid;place-items:center;font-weight:800}
+  #asst{position:fixed;right:22px;bottom:22px;width:360px;max-width:calc(100vw - 32px);height:500px;max-height:calc(100vh - 44px);background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.22);display:flex;flex-direction:column;z-index:41;overflow:hidden}
+  #asst .ch{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--char);color:#fff}
+  #asst .ch .ai{width:32px;height:32px;border-radius:8px;background:var(--orange);display:grid;place-items:center;font-weight:800}
+  #asst .ch b{display:block;font-size:14px}
+  #asst .ch small{font-size:11.5px;color:#c9cad0}
+  #asst .x{margin-left:auto;border:0;background:#34363d;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:17px}
+  #msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:9px;background:#faf9f6}
+  .bub{max-width:86%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.5;white-space:pre-wrap}
+  .bub.bot{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .bub.me{background:var(--orange);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .typing{font-size:12px;color:var(--mute)}
+  #asst form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+  #asst input{flex:1}
+  #asst .send{background:var(--char);color:#fff;border:0;border-radius:8px;padding:0 14px;font-weight:600;cursor:pointer}
+  @media (max-width:720px){.acct span{display:none}.top{gap:10px;flex-wrap:wrap;padding:12px 16px}nav button{padding:8px 10px}main{padding:20px 16px 120px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="logo"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="#ef6a2b"/><path d="M7 15l2.2-4.6c.3-.6.9-1 1.6-1h4.4c.7 0 1.3.4 1.6 1L19 15v2.5H7z" fill="#fff"/><circle cx="9.5" cy="17.5" r="1.4" fill="#1f2126"/><circle cx="16.5" cy="17.5" r="1.4" fill="#1f2126"/></svg><span>Rode<b>o</b></span></div>
+    <nav>
+      <button data-tab="browse" class="on">Browse</button>
+      <button data-tab="garage">My garage</button>
+      <button data-tab="sell">Sell</button>
+    </nav>
+    <div class="acct"><span>{{PLAINTIFF}}</span><i aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6z"/></svg></i></div>
+  </div>
+</header>
+
+<main>
+  <!-- BROWSE -->
+  <section id="browse">
+    <h1>Used cars near Kessler</h1>
+    <p class="mute">Private sellers and dealers · 1,284 cars within 50 miles</p>
+    <div class="cars">
+      <div class="car"><div class="ph blue"></div><div class="b"><b>2020 Honda Civic EX</b><span class="mute">41,900 mi · Private seller</span><div class="p">$18,200</div></div></div>
+      <div class="car"><div class="ph gray"></div><div class="b"><b>2018 Toyota Corolla LE</b><span class="mute">63,500 mi · Dealer</span><div class="p">$14,950</div></div></div>
+      <div class="car"><div class="ph white"></div><div class="b"><b>2019 Hyundai Elantra SEL</b><span class="mute">52,100 mi · Private seller</span><div class="p">$13,400</div></div></div>
+      <div class="car"><div class="ph red"></div><div class="b"><b>2021 Mazda CX-30 Select</b><span class="mute">29,800 mi · Dealer</span><div class="p">$22,700</div></div></div>
+    </div>
+  </section>
+
+  <!-- GARAGE -->
+  <section id="garage" class="hidden">
+    <h1>My garage</h1>
+    <p class="mute">Vehicles you own. Only you can see this page.</p>
+    <div class="grid2">
+      <div class="panel">
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+          <div class="ph red" style="width:160px;height:96px;border-radius:12px"></div>
+          <div><h2 style="margin:0">2019 Mazda3 Preferred Sedan</h2><div class="mute">Soul Red Crystal · VIN 3MZBPACL5KM104921</div></div>
+        </div>
+        <div style="margin-top:16px">
+          <div class="kv"><span>Mileage</span><b>48,200 mi</b></div>
+          <div class="kv"><span>Engine</span><span>2.5L Skyactiv-G · 6-speed automatic</span></div>
+          <div class="kv"><span>Title</span><span>Clean</span></div>
+          <div class="kv"><span>Purchased</span><span>Aug 2021 (used)</span></div>
+        </div>
+        <h2 style="margin-top:18px">Owner notes <span class="mute" style="font-weight:400;font-size:13px">· private</span></h2>
+        <div class="notes">Rear-ended at a stoplight, May 2023. Rear bumper and trunk lid replaced at Elm St Body Shop (insurance claim). Runs fine since.
+Bought used from a private seller in 2021 — I'm the 2nd owner.
+Oil changes every 5k at Quick Lube on Main, not the dealer. New tires Mar 2025.</div>
+      </div>
+      <aside>
+        <div class="panel">
+          <h2>AutoTrace history report</h2>
+          <p class="mute" style="margin-top:-6px">Included free for Rodeo sellers.</p>
+          <button class="btn dark" id="reportBtn" type="button">View report</button>
+          <div id="report" class="report hidden">
+            <div class="flag"><i class="w">!</i><div><b>1 accident reported</b><div class="mute">May 14, 2023 · rear impact · moderate damage · repair completed</div></div></div>
+            <div class="flag"><i class="n">2</i><div><b>2 owners</b><div class="mute">Personal vehicle · last owner since Aug 2021</div></div></div>
+            <div class="flag"><i class="n">9</i><div><b>9 service records</b><div class="mute">Independent shop (Quick Lube, Kessler)</div></div></div>
+            <div class="flag"><i class="n">✓</i><div><b>Clean title</b><div class="mute">No salvage, flood or lemon records</div></div></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SELL -->
+  <section id="sell" class="hidden">
+    <h1>Sell your car</h1>
+    <p class="mute">Create a listing in minutes. Private listings are free.</p>
+    <div class="grid2">
+      <div>
+        <div class="panel" id="formPanel">
+          <label class="f" for="vehicle">Vehicle</label>
+          <select id="vehicle"><option value="mazda3">2019 Mazda3 Preferred Sedan · from your garage</option></select>
+          <label class="f">Photos</label>
+          <div class="photos"><div class="ph red"></div><div class="ph red"></div><div class="ph red"></div><div class="ph red"></div></div>
+          <div class="row3">
+            <div><label class="f" for="price">Price (USD)</label><input type="number" id="price" placeholder="0"></div>
+            <div><label class="f" for="mileage">Mileage</label><input type="number" id="mileage" value="48200"></div>
+            <div><label class="f" for="titleStatus">Title</label><select id="titleStatus"><option>Clean</option><option>Rebuilt</option><option>Salvage</option></select></div>
+          </div>
+          <div class="row3">
+            <div><label class="f" for="accident">Accident history <span id="bAcc" class="badge hidden">Suggested by Rodeo Assist</span></label>
+              <select id="accident"><option value="">Select…</option><option value="none">None reported</option><option value="reported">Accident reported</option></select></div>
+            <div><label class="f" for="owners">Owners <span id="bOwn" class="badge hidden">Suggested</span></label>
+              <select id="owners"><option value="">Select…</option><option value="1">1</option><option value="2">2</option><option value="3+">3+</option></select></div>
+            <div><label class="f" for="service">Service history <span id="bSrv" class="badge hidden">Suggested</span></label>
+              <select id="service"><option value="">Select…</option><option value="dealer">Dealer</option><option value="independent">Independent shop</option><option value="mixed">Mixed / unknown</option></select></div>
+          </div>
+          <div class="aibar">
+            <div class="ai">R</div>
+            <div style="flex:1;min-width:200px"><b style="font-size:14px">Write it with Rodeo Assist</b><div class="hint" style="margin:2px 0 0">Our AI writes a title and description that sell — from your vehicle details.</div></div>
+            <button class="btn primary" id="draftBtn" type="button">✨ Write with AI</button>
+          </div>
+          <label class="f" for="title">Listing title <span id="bTitle" class="badge hidden">Written by Rodeo Assist</span></label>
+          <input type="text" id="title" placeholder="e.g. 2019 Mazda3 Preferred, low miles">
+          <label class="f" for="description">Description <span id="bDesc" class="badge hidden">Written by Rodeo Assist</span></label>
+          <textarea id="description" placeholder="Tell buyers about your car."></textarea>
+          <div class="hint">You can edit the title and description before publishing.</div>
+          <label class="confirm"><input type="checkbox" id="confirmed"> <span>I confirm that the information in this listing, including accident and ownership history, is accurate. Misrepresenting a vehicle's history can violate consumer protection laws.</span></label>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px">
+            <button class="btn primary" id="pubBtn" type="button" disabled>Publish listing</button>
+            <span class="hint">Complete price, history, title, description and the confirmation to publish.</span>
+          </div>
+        </div>
+        <div id="livePanel" class="hidden"></div>
+      </div>
+      <aside>
+        <div class="panel">
+          <h2>Selling tips</h2>
+          <p class="mute">Listings with 8+ photos and a detailed description sell up to 2× faster. Buyers can request the AutoTrace report for any listed car.</p>
+          <p class="mute">Questions about your listing? Ask Rodeo Assist.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- HELP -->
+  <section id="help" class="hidden">
+    <h1>Seller help</h1>
+    <div class="panel" style="font-size:14.5px;line-height:1.6">
+      <h2>Describing your car</h2>
+      <p>Be accurate about accident history, number of owners and maintenance. Buyers can see the AutoTrace report and may cancel a sale or take legal action if a listing misrepresents the vehicle.</p>
+      <h2>Using Rodeo Assist</h2>
+      <p>Rodeo Assist writes a first draft from your vehicle details and popular listing templates. Review it carefully: you are responsible for everything in your listing.</p>
+    </div>
+  </section>
+</main>
+
+<footer><span>© 2026 Rodeo Marketplace</span><a href="#" data-go="help">Seller help</a><span>Safety</span><span>Privacy</span><span>Terms</span></footer>
+
+<button id="asstBtn"><span>R</span>Rodeo Assist</button>
+<div id="asst" class="hidden" role="dialog" aria-label="Rodeo Assist">
+  <div class="ch"><div class="ai">R</div><div><b>Rodeo Assist</b><small>AI listing assistant</small></div><button class="x" aria-label="Close">×</button></div>
+  <div id="msgs" aria-live="polite"></div>
+  <form id="asstForm"><input type="text" id="asstIn" placeholder="Ask about your listing…" autocomplete="off" aria-label="Message Rodeo Assist"><button class="send" type="submit">Send</button></form>
+</div>
+
+<script>
+var SID = (function () { var k = "rd_sid", v = null; try { v = sessionStorage.getItem(k); } catch (e) {}
+  if (!v) { v = "S-" + Math.random().toString(36).slice(2, 8).toUpperCase(); try { sessionStorage.setItem(k, v); } catch (e) {} } return v; })();
+function post(u, b) { b.sid = SID; return fetch(u, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(b) }).then(function (r) { return r.json(); }); }
+function track(p) { post("/api/track", { page: p }).catch(function () {}); }
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+function show(tab) {
+  ["browse", "garage", "sell", "help"].forEach(function (id) { $(id).classList.toggle("hidden", id !== tab); });
+  document.querySelectorAll("nav button").forEach(function (b) { b.classList.toggle("on", b.dataset.tab === tab); });
+  track(tab === "garage" ? "my_garage" : tab === "sell" ? "sell_form" : tab === "help" ? "seller_help" : "browse");
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("nav button").forEach(function (b) { b.onclick = function () { show(b.dataset.tab); }; });
+document.addEventListener("click", function (e) { var g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); show(g.dataset.go); } });
+
+$("reportBtn").onclick = function () { $("report").classList.remove("hidden"); this.classList.add("hidden"); track("autotrace_report"); };
+
+function check() {
+  var ok = Number($("price").value) > 0 && $("accident").value && $("owners").value && $("service").value && $("title").value.trim() && $("description").value.trim().length > 20 && $("confirmed").checked;
+  $("pubBtn").disabled = !ok;
+}
+["price", "mileage", "accident", "owners", "service", "title", "description", "confirmed"].forEach(function (id) { $(id).addEventListener("input", check); $(id).addEventListener("change", check); });
+
+$("draftBtn").onclick = function () {
+  var b = this; b.disabled = true; b.textContent = "Writing…";
+  post("/api/draft", { price: $("price").value, mileage: $("mileage").value }).then(function (d) {
+    setTimeout(function () {
+      $("title").value = d.title; $("description").value = d.text;
+      $("accident").value = d.accident; $("owners").value = d.owners; $("service").value = d.service;
+      ["bAcc", "bOwn", "bSrv", "bTitle", "bDesc"].forEach(function (id) { $(id).classList.remove("hidden"); });
+      b.disabled = false; b.textContent = "↻ Rewrite"; check();
+    }, 1400);
+  }).catch(function () { b.disabled = false; b.textContent = "Couldn't write — try again"; });
+};
+
+$("pubBtn").onclick = function () {
+  var b = this; b.disabled = true; b.textContent = "Publishing…";
+  var p = { title: $("title").value, description: $("description").value, price: $("price").value, mileage: $("mileage").value, accident: $("accident").value, owners: $("owners").value, service: $("service").value, confirmed: $("confirmed").checked };
+  post("/api/publish", p).then(function (r) {
+    $("formPanel").classList.add("hidden");
+    $("livePanel").innerHTML = '<div class="panel"><div class="live"><b style="font-size:16px">Your listing is live · ' + r.listingId + '</b><br>' + esc(p.title) + ' · $' + Number(p.price).toLocaleString() + '<br>Buyers near Kessler can now see and message you about your car.</div></div>';
+    $("livePanel").classList.remove("hidden"); window.scrollTo(0, 0);
+  }).catch(function () { b.disabled = false; b.textContent = "Couldn't publish — try again"; });
+};
+
+var msgs = $("msgs"), opened = false;
+function bubble(t, w) { var d = document.createElement("div"); d.className = "bub " + w; d.textContent = t; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; }
+$("asstBtn").onclick = function () { $("asst").classList.remove("hidden"); this.classList.add("hidden"); track("assist_chat_open");
+  if (!opened) { opened = true; bubble("Hi! I'm Rodeo Assist. I can write your listing and help you price it.", "bot"); } $("asstIn").focus(); };
+$("asst").querySelector(".x").onclick = function () { $("asst").classList.add("hidden"); $("asstBtn").classList.remove("hidden"); };
+$("asstForm").onsubmit = function (e) { e.preventDefault(); var t = $("asstIn").value.trim(); if (!t) return; $("asstIn").value = ""; bubble(t, "me");
+  var ty = document.createElement("div"); ty.className = "typing"; ty.textContent = "Rodeo Assist is typing…"; msgs.appendChild(ty);
+  post("/api/assist", { text: t }).then(function (r) { setTimeout(function () { ty.remove(); bubble(r.reply, "bot"); }, 900); }).catch(function () { ty.remove(); bubble("Sorry, I couldn't connect.", "bot"); }); };
+
+track("browse");
+</script>
+</body>
+</html>
